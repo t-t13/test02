@@ -29,3 +29,54 @@ export const CORE_CONCEPTS = [
       'React-managed data which, when changed, causes the component to re-render & the UI to update.',
   },
 ];
+
+export const EXAMPLES = {
+  gojo: {
+    title: 'Gojo',
+    description:
+      'nah I"d win.',
+    code: `
+function Welcome() {
+  return <h1>Hello, World!</h1>;
+}`,
+  },
+  frog: {
+    title: 'frog',
+    description:
+      'Mu ha ha ha ha.',
+    code: `
+<div>
+  <h1>Welcome {userName}</h1>
+  <p>Time to learn React!</p>
+</div>`,
+  },
+  pBoss: {
+    title: 'P"Boss',
+    description:
+      'Carry no.1.',
+    code: `
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}`,
+  },
+  rhungNoi: {
+    title: 'Rhung"Noi',
+    description:
+      'Age it"s not reason, can I fight.',
+    code: `
+function Counter() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  function handleClick() {
+    setIsVisible(true);
+  }
+
+  return (
+    <div>
+      <button onClick={handleClick}>Show Details</button>
+      {isVisible && <p>Amazing details!</p>}
+    </div>
+  );
+}`,
+  },
+};
