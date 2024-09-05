@@ -1,12 +1,8 @@
-export default function TabButton({ children, word }) {
-    // this event is create when you click this component.
-    const clickTabButton = () => {
-        console.log("nah i'd win." + word);
-    }
+export default function TabButton({ children, word, onClickThisBut }) {
 
     return (
         <li>
-            <button onClick={clickTabButton}> {children} </button>
+            <button onClick={onClickThisBut}> {children} </button>
         </li>
     );
 
