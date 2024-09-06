@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { EXAMPLES } from "../../data";
 import TabButton from "../TabButton/TabButton";
+import Section from "../Sections/Sections";
 
 export function Examples() {
     // state that can management by hook is useState();
@@ -12,7 +13,7 @@ export function Examples() {
     }
 
     return (
-        <section id="examples">
+        <Section title="Select Your Agent." id="examples">
             <menu id="">
                 {/* <TabButton onClickThisBut={() => clickTabButton("nah I'd win.")}> gojo </TabButton>
       <TabButton onClickThisBut={() => clickTabButton("Mu ha ha ha ha.")}> frog </TabButton>
@@ -40,6 +41,6 @@ export function Examples() {
                 </div>
             }
 
-        </section>
+        </Section>
     );
 }
