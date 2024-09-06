@@ -27,7 +27,8 @@ export function Examples() {
     return (
 
         <Section title="Select Your Agent." id="examples">
-            <Tabs
+            <Tabs 
+                // Compo={Section} 
                 tabButton={
                     <>
                         <TabButton isSelected={agent === "gojo"} onClickThisBut={() => clickTabButton("gojo")}> gojo </TabButton>

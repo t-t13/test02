@@ -1,9 +1,15 @@
-export default function Tabs ({tabButton, children}){
+export default function Tabs({ tabButton, children, Compo = 'div' }) {
     return (
         <>
-        <menu>
+            {/* Compo props is a Section component */}
+            {/* <Compo>
             {tabButton}
-        </menu>
+        </Compo>
+            {children} */}
+
+            <menu>
+                {tabButton}
+            </menu>
             {children}
         </>
     )
