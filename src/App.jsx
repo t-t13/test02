@@ -1,79 +1,50 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import Places from "./components/Places.jsx";
-import { AVAILABLE_PLACES } from "./data.js";
-import Modal from "./components/Modal.jsx";
-import DeleteConfirmation from "./components/DeleteConfirmation.jsx";
-import logoImg from "./assets/logo.png";
+import { useRef, useState, useCallback } from 'react';
+
+import Places from './components/Places.jsx';
+import Modal from './components/Modal.jsx';
+import DeleteConfirmation from './components/DeleteConfirmation.jsx';
+import logoImg from './assets/logo.png';
+import AvailablePlaces from './components/AvailablePlaces.jsx';
 
 function App() {
-  const modal = useRef();
   const selectedPlace = useRef();
-  const [pickedPlaces, setPickedPlaces] = useState([]);
-  const [showText, setShowText] = useState();
 
-  useEffect(() => {
-    const text = "this is infinnite loop.";
-    setShowText(text);
+  const [userPlaces, setUserPlaces] = useState([]);
 
-    const storeBG = JSON.parse(localStorage.getItem("backgroundPlaces")) || [];
-    const listBGs = storeBG.map((sId) => {
-      return AVAILABLE_PLACES.find((place) => place.id === sId);
-    });
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-    setPickedPlaces(listBGs);
-  }, []);
-
-  function handleStartRemovePlace(id) {
-    modal.current.open();
-    selectedPlace.current = id;
+  function handleStartRemovePlace(place) {
+    setModalIsOpen(true);
+    selectedPlace.current = place;
   }
 
   function handleStopRemovePlace() {
-    modal.current.close();
+    setModalIsOpen(false);
   }
 
-  function handleSelectPlace(id) {
-    setPickedPlaces((prevPickedPlaces) => {
-      if (prevPickedPlaces.some((place) => place.id === id)) {
+  function handleSelectPlace(selectedPlace) {
+    setUserPlaces((prevPickedPlaces) => {
+      if (!prevPickedPlaces) {
+        prevPickedPlaces = [];
+      }
+      if (prevPickedPlaces.some((place) => place.id === selectedPlace.id)) {
         return prevPickedPlaces;
       }
-      const place = AVAILABLE_PLACES.find((place) => place.id === id);
-      return [place, ...prevPickedPlaces];
+      return [selectedPlace, ...prevPickedPlaces];
     });
-
-    const storeBG = JSON.parse(localStorage.getItem("backgroundPlaces")) || [];
-    if (storeBG.indexOf(id) === -1) {
-      localStorage.setItem(
-        "backgroundPlaces",
-        JSON.stringify([...storeBG, id])
-      );
-    }
   }
 
-  const handleRemovePlace = useCallback(
-    function handleRemovePlace() {
-    console.log("before re-ex");
-    
-    setPickedPlaces((prevPickedPlaces) =>
-      prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
+  const handleRemovePlace = useCallback(async function handleRemovePlace() {
+    setUserPlaces((prevPickedPlaces) =>
+      prevPickedPlaces.filter((place) => place.id !== selectedPlace.current.id)
     );
 
-    console.log("after re-ex");
-
-    modal.current.close();
-
-    console.log("after re-ex-2");
-
-    const storeBG = JSON.parse(localStorage.getItem("backgroundPlaces")) || [];
-    localStorage.setItem(
-      "backgroundPlaces",
-      JSON.stringify(storeBG.filter((id) => id !== selectedPlace.current))
-    );
+    setModalIsOpen(false);
   }, []);
 
   return (
     <>
-      <Modal ref={modal}>
+      <Modal open={modalIsOpen} onClose={handleStopRemovePlace}>
         <DeleteConfirmation
           onCancel={handleStopRemovePlace}
           onConfirm={handleRemovePlace}
@@ -91,15 +62,12 @@ function App() {
       <main>
         <Places
           title="I'd like to visit ..."
-          fallbackText={"Select the places you would like to visit below."}
-          places={pickedPlaces}
+          fallbackText="Select the places you would like to visit below."
+          places={userPlaces}
           onSelectPlace={handleStartRemovePlace}
         />
-        <Places
-          title="Available Places"
-          places={AVAILABLE_PLACES}
-          onSelectPlace={handleSelectPlace}
-        />
+
+        <AvailablePlaces onSelectPlace={handleSelectPlace} />
       </main>
     </>
   );
