@@ -1,6 +1,7 @@
+import { useDispatch, useSelector } from 'react-redux';
 import classes from './UserProfile.module.css';
 
-const UserProfile = () => {
+const UserProfile = () => {  
   return (
     <main className={classes.profile}>
       <h2>My User Profile</h2>
