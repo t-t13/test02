@@ -1,20 +1,10 @@
-import { useSelector } from "react-redux";
-import Auth from "./components/Auth";
-import Counter from "./components/Counter";
-import Header from "./components/Header";
-import UserProfile from "./components/UserProfile";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import HomePage from "./Page/Home/HomePage";
+
+const router = createBrowserRouter([{ path: "/", element: <HomePage /> }]);
 
 function App() {
-  const isAuth = useSelector((state) => state.authPain.isAuthenticated);
-
-  return (
-    <>
-      <Header />
-      {isAuth && <UserProfile />}
-      {!isAuth && <Auth />}
-      <Counter />
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
